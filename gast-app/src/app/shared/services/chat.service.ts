@@ -1,17 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {WebSocketService} from './websocket.service';
+import {Message} from '../../model/message.model'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
 const CHAT_URL = 'ws://localhost:8080/gastwebsocket';
 //const DATA_URL = 'ws://localhost:3006';
-
-export interface Message {
-    author: string,
-    message: string,
-    newDate?: string
-}
 
 @Injectable()
 export class ChatService {

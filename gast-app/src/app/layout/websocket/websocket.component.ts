@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import {ChatService, Message} from '../../shared/services/chat.service';
+import {ChatService} from '../../shared/services/chat.service';
+import {Message} from '../../model/message.model';
 
 @Component({
     selector: 'app-websocket',
