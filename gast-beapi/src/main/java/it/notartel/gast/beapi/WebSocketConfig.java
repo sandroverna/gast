@@ -1,4 +1,4 @@
-package it.notartel.gast.websocket;
+package it.notartel.gast.beapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,10 +14,10 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 public class WebSocketConfig  implements WebSocketConfigurer {
 
 	@Autowired
-	GastWebSocketHandler gastWSocket;
+	GastWebSocketHandler gastWSocketHandler;
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(gastWSocket, "/gastwebsocket").addInterceptors(new HttpSessionHandshakeInterceptor());
+		registry.addHandler(gastWSocketHandler, "/gastwebsocket").addInterceptors(new HttpSessionHandshakeInterceptor());
 	}
 }
