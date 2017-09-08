@@ -1,23 +1,23 @@
 #setting on start
 
+#### local di sandro
+- /home/alessandro/IdeaProjects
+
 ## FE
+- cd /gast/gast-app
 
 ### install
-- cd /home/alessandro/IdeaProjects/gast/gast-app
 - npm install
-- npm start
 
 ### start
-- cd /home/alessandro/IdeaProjects/gast/gast-app
 - ng serve --open
 
 ## BE
+- cd /gast/gast-beapi
 
 ### install
-- cd /home/alessandro/IdeaProjects/gast/gast-beapi
 mvn install
 
 ### start
-- cd /home/alessandro/IdeaProjects/gast/gast-beapi
 - mvn spring-boot:run
 

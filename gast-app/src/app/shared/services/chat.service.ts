@@ -16,7 +16,7 @@ export interface Message {
 @Injectable()
 export class ChatService {
     public messages: Subject<Message>  = new Subject<Message>();
-    public randomData: Subject<number> = new Subject<number>();
+    //public randomData: Subject<number> = new Subject<number>();
 
     constructor(private wsService: WebSocketService) {
 
