@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import {ChatService, Message} from '../../shared/services/chat.service';
 
 @Component({
     selector: 'app-websocket',
@@ -8,10 +9,16 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class WebsocketComponent implements OnInit {
+    private messages: Message[] = [];
 
-    constructor() { }
+    constructor(
+        private chatService: ChatService
+    ) { }
 
     ngOnInit() {
+        this.chatService.messages.subscribe(msg => {
+            this.messages.push(msg);
+        });
     }
 
 }

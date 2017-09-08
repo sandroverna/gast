@@ -1,3 +1,7 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Websocket'" [icon]="'fa-bar-chart-o'"></app-page-header>
+    <h5>Recieved messages:</h5>
+    <p *ngFor="let msg of messages">
+        <strong>({{msg.author}})</strong>
+        {{msg.message}} ({{msg.newDate}})</p>
 </div>
