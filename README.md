@@ -4,23 +4,20 @@
 - /home/alessandro/IdeaProjects
 
 ## FE
+- cd /gast/gast-app
 
 ### install
-- cd /gast/gast-app
 - npm install
-- npm start
 
 ### start
-- cd /gast/gast-app
 - ng serve --open
 
 ## BE
+- cd /gast/gast-beapi
 
 ### install
-- cd /gast/gast-beapi
 mvn install
 
 ### start
-- cd /gast/gast-beapi
 - mvn spring-boot:run
 
