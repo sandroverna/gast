@@ -1,10 +1,22 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Websocket'" [icon]="'fa-bar-chart-o'"></app-page-header>
-    <button class="btn btn-lg btn-primary" type="button" (click)="onConnection()">Connection</button>
+    <div *ngIf="!connection">
+        <button class="btn btn-primary" type="button" (click)="onConnection()">Connection</button>
+    </div>
+    <div class="row" *ngIf="connection">
+        <div class="col-xl-10">
+            <input class="form-control" [(ngModel)]="message" placeholder="inserisci messaggio">
+        </div>
+        <div class="col-xl-2 text-right">
+            <button class="btn btn-primary" type="button" (click)="onSend()">Send</button>
+            <button class="btn btn-danger" type="button" (click)="onDestroy()">Close Connection</button>
+        </div>
+    </div>
     <br>
     <p>{{ helloword }}</p>
     <hr>
     <h5>Recieved messages:</h5>
+    <hr>
     <p *ngFor="let msg of messages">
         <strong>({{msg.author}})</strong>
         {{msg.message}} ({{msg.newDate}})</p>

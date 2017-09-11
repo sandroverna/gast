@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { WebsocketRoutingModule } from './websocket-routing.module';
 import { WebsocketComponent } from './websocket.component';
 import { PageHeaderModule } from './../../shared';
@@ -9,7 +9,8 @@ import { PageHeaderModule } from './../../shared';
     imports: [
         CommonModule,
         WebsocketRoutingModule,
-        PageHeaderModule
+        PageHeaderModule,
+        FormsModule
     ],
     declarations: [WebsocketComponent]
 })

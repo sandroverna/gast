@@ -17,33 +17,41 @@ import {Message} from '../../model/websocket';
 export class WebsocketComponent implements OnInit {
     private socketSubscription: Subscription;
     private messages: Message[] = [];
+    private message: string;
+    private connection: boolean = false;
 
-    constructor(private socket: WebSocketServiceModel) {}
+    constructor(public socket: WebSocketServiceModel) {}
 
-    ngOnInit() {
+    ngOnInit() { }
+
+    onConnection(){
         this.socket.connect();
-
+        this.connection = true;
+        console.log('socket', this.socket);
         this.socketSubscription = this.socket.messages.subscribe((message: string) => {
-            console.log('received message from server: ', message);
             this.mapMessage('server', message);
         });
-
-        // send message to server, if the socket is not connected it will be sent
-        // as soon as the connection becomes available thanks to QueueingSubject
-        this.socket.send('hello');
     }
 
-    ngOnDestroy() {
-        this.socketSubscription.unsubscribe()
+    onSend(){
+        if(this.message){
+            this.socket.send(this.message);
+            this.message = null;
+        }
+    }
+
+    onDestroy() {
+        this.socketSubscription.unsubscribe();
+        this.connection = false;
     }
 
     mapMessage(emitter, message){
-        let now = moment().format('DD/MM/YYYY HH:mm');
+        let now = moment().format('DD/MM/YYYY HH:mm:ss');
         let remap = {
             author: emitter,
             message: message,
             newDate: now
-        }
+        };
         this.messages.push(remap);
     }
 
