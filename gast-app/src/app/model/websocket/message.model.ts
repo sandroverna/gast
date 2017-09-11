@@ -1,5 +1,5 @@
 export interface Message {
-    author: string,
-    message: string,
+    author: any,
+    message: any,
     newDate?: string
 }
