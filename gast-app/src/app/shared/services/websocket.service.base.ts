@@ -4,7 +4,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observer} from "rxjs/Observer";
 
 @Injectable()
-export class WebSocketService {
+export class WebSocketServiceBase {
     private subject: Subject<MessageEvent>;
     //private subjectData: Subject<number>;
 

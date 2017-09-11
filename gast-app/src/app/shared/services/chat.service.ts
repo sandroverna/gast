@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {WebSocketService} from './websocket.service';
-import {Message} from '../../model/message.model'
+import {WebSocketServiceBase} from './websocket.service.base';
+import {Message} from '../../model/websocket/'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -13,7 +13,7 @@ export class ChatService {
     public messages: Subject<Message>  = new Subject<Message>();
     //public randomData: Subject<number> = new Subject<number>();
 
-    constructor(private wsService: WebSocketService) {
+    constructor(private wsService: WebSocketServiceBase) {
 
         // 1. subscribe to chatbox
         this.messages   = <Subject<Message>>this.wsService
