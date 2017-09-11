@@ -19,16 +19,16 @@ import it.notartel.gast.beapi.model.Message;
 @Component
 public class GastWebSocketHandler extends TextWebSocketHandler {
 	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+	List<TextMessage> messages = new CopyOnWriteArrayList<>();
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
 		
 		for(WebSocketSession webSocketSession : sessions) {
-			//Message sessionMessage = new Gson().fromJson(message.getPayload(), Message.class);
-			//Map mapvalue = new Gson().fromJson(message.getPayload(), Map.class);
-		    //System.out.println("MESSAGE = " + sessionMessage.toString());
 			webSocketSession.sendMessage(message);
 		}
+		
+		messages.add(message);
 	}
 	
 	@Override
@@ -36,6 +36,14 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 		//the messages will be broadcasted to all users.
 		sessions.add(session);
 		System.out.println("Connessione stabilita con: " + session.toString());
+		messages.forEach(m -> {
+			try {
+				session.sendMessage(m);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	@Override
