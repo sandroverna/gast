@@ -11,7 +11,9 @@ import { AuthGuard } from './shared';
 
 // services
 import {ChatService} from './shared/services/chat.service';
-import {WebSocketService} from './shared/services/websocket.service';
+import {WebSocketServiceBase} from './shared/services/websocket.service.base';
+import {WebSocketServiceModel} from './shared/services/websocket.service.model';
+import {QueueingSubject} from './shared/services/queueing.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -37,7 +39,7 @@ export function HttpLoaderFactory(http: Http) {
             }
         })
     ],
-    providers: [AuthGuard, ChatService, WebSocketService],
+    providers: [AuthGuard, ChatService, WebSocketServiceBase, WebSocketServiceModel, QueueingSubject],
     bootstrap: [AppComponent]
 })
 export class AppModule {

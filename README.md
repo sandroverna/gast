@@ -1,7 +1,7 @@
 #setting on start
 
 #### local di sandro
-- /home/alessandro/IdeaProjects
+- cd /home/alessandro/IdeaProjects
 
 ## FE
 - cd /gast/gast-app
