@@ -49,7 +49,6 @@ export class WebsocketComponent implements OnInit {
         if(this.message){
             this.message.newDate = moment().format('DD/MM/YYYY HH:mm:ss');
             this.socket.send(JSON.stringify(this.message));
-            this.messages = [];
             this.message.message = null;
         }
     }
@@ -57,6 +56,7 @@ export class WebsocketComponent implements OnInit {
     onDestroy() {
         this.socketSubscription.unsubscribe();
         this.connection = false;
+        this.messages = [];
     }
 
     resetMessage(){
