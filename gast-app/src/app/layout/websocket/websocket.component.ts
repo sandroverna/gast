@@ -27,26 +27,29 @@ export class WebsocketComponent implements OnInit {
     }
 
     onConnection(){
-        this.socket.connect();
-        this.connection = true;
-        console.log('message', this.message);
-        this.socketSubscription = this.socket.messages.subscribe((message: string) => {
-            try
-            {
-                let response = JSON.parse(message);
-                this.messages.push(response);
-            }
-            catch(Error)
-            {
-                this.mapMessage('server', message);
-            }
-        });
+        if(this.message.author){
+            this.socket.connect();
+            this.connection = true;
+            console.log('message', this.message);
+            this.socketSubscription = this.socket.messages.subscribe((message: string) => {
+                try
+                {
+                    let response = JSON.parse(message);
+                    this.messages.push(response);
+                }
+                catch(Error)
+                {
+                    this.mapMessage('server', message);
+                }
+            });
+        }
     }
 
     onSend(){
         if(this.message){
             this.message.newDate = moment().format('DD/MM/YYYY HH:mm:ss');
             this.socket.send(JSON.stringify(this.message));
+            this.messages = [];
             this.message.message = null;
         }
     }
