@@ -6,6 +6,7 @@ import {Observer} from "rxjs/Observer";
 @Injectable()
 export class WebSocketServiceBase {
     private subject: Subject<MessageEvent>;
+    private ws: any;
     //private subjectData: Subject<number>;
 
     // For chat box
@@ -15,23 +16,27 @@ export class WebSocketServiceBase {
         }
         return this.subject;
     }
+    // For chat box
+    public send(msg) {
+        this.ws.send(JSON.stringify(msg));
+    }
 
     private create(url: string): Subject<MessageEvent> {
-        let ws = new WebSocket(url);
+        this.ws = new WebSocket(url);
 
         let observable = Observable.create(
             (obs: Observer<MessageEvent>) => {
-                ws.onmessage = obs.next.bind(obs);
-                ws.onerror   = obs.error.bind(obs);
-                ws.onclose   = obs.complete.bind(obs);
+                this.ws.onmessage = obs.next.bind(obs);
+                this.ws.onerror   = obs.error.bind(obs);
+                this.ws.onclose   = obs.complete.bind(obs);
 
-                return ws.close.bind(ws);
+                return this.ws.close.bind(this.ws);
             });
 
         let observer = {
             next: (data: Object) => {
-                if (ws.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify(data));
+                if (this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify(data));
                 }
             }
         };

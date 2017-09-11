@@ -16,14 +16,15 @@ export class ChatService {
     constructor(private wsService: WebSocketServiceBase) {
 
         // 1. subscribe to chatbox
-        this.messages   = <Subject<Message>>this.wsService
+        this.messages = <Subject<Message>>this.wsService
             .connect(CHAT_URL)
             .map((response: MessageEvent): Message => {
-                let data = JSON.parse(response.data);
+                console.log('response', response.data);
+                // let data = JSON.parse(response.data);
                 return {
-                    author : data.author,
-                    message: data.message,
-                    newDate: data.newDate
+                    author : 'server',
+                    message: response.data,
+                    newDate: 'mo mo'
                 }
             });
 

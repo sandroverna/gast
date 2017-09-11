@@ -1,69 +1,32 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable'
-import {Subscription} from 'rxjs/Subscription'
-import {BehaviorSubject} from 'rxjs/BehaviorSubject'
-import {Connection, Socket} from '../../model/websocket/'
-
-export type WebSocketFactory = (url: String) => Socket
-const defaultWebsocketFactory = (url: string): Socket => new WebSocket(url);
+import { Injectable } from '@angular/core'
+import { QueueingSubject } from 'queueing-subject'
+import { Observable } from 'rxjs/Observable'
+import websocketConnect from 'rxjs-websockets'
 
 @Injectable()
 export class WebSocketServiceModel {
+    private CHAT_URL: string = 'ws://localhost:8080/gastwebsocket';
+    private inputStream: QueueingSubject<string>;
+    public messages: Observable<string>;
 
-    public connect(url: string, input: Observable<any>, websocketFactory: WebSocketFactory = defaultWebsocketFactory): Connection {
-        const connectionStatus = new BehaviorSubject<number>(0);
+    public connect() {
+        if (this.messages)
+            return;
 
-        const messages = new Observable<string>(observer => {
-            const socket = websocketFactory(url);
-            let inputSubscription: Subscription;
+        // Using share() causes a single websocket to be created when the first
+        // observer subscribes. This socket is shared with subsequent observers
+        // and closed when the observer count falls to zero.
+        this.messages = websocketConnect(
+            this.CHAT_URL,
+            this.inputStream = new QueueingSubject<string>()
+        ).messages.share()
+    }
 
-            let open = false;
-            const closed = () => {
-                if (!open)
-                    return;
-
-                connectionStatus.next(connectionStatus.getValue() - 1);
-                open = false
-            };
-
-            socket.onopen = () => {
-                open = true;
-                connectionStatus.next(connectionStatus.getValue() + 1);
-                inputSubscription = input.subscribe(data => {
-                    socket.send(data)
-                })
-            };
-
-            socket.onmessage = message => {
-                observer.next(message.data)
-            };
-
-            socket.onerror = error => {
-                closed();
-                observer.error(error)
-            };
-
-            socket.onclose = (event: CloseEvent) => {
-                closed();
-                if (event.wasClean)
-                    observer.complete();
-                else
-                    observer.error(new Error(event.reason))
-            };
-
-            return () => {
-                if (inputSubscription)
-                    inputSubscription.unsubscribe();
-
-                if (socket) {
-                    closed();
-                    socket.close()
-                }
-            }
-        });
-
-        return {messages, connectionStatus}
-
+    public send(message: string):void {
+        // If the websocket is not connected then the QueueingSubject will ensure
+        // that messages are queued and delivered when the websocket reconnects.
+        // A regular Subject can be used to discard messages sent when the websocket
+        // is disconnected.
+        this.inputStream.next(message);
     }
 }
-
