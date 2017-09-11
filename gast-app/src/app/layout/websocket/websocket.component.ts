@@ -17,26 +17,37 @@ import {Message} from '../../model/websocket';
 export class WebsocketComponent implements OnInit {
     private socketSubscription: Subscription;
     private messages: Message[] = [];
-    private message: string;
+    private message: Message;
     private connection: boolean = false;
 
     constructor(public socket: WebSocketServiceModel) {}
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.resetMessage();
+    }
 
     onConnection(){
         this.socket.connect();
         this.connection = true;
-        console.log('socket', this.socket);
+        console.log('message', this.message);
         this.socketSubscription = this.socket.messages.subscribe((message: string) => {
-            this.mapMessage('server', message);
+            try
+            {
+                let response = JSON.parse(message);
+                this.messages.push(response);
+            }
+            catch(Error)
+            {
+                this.mapMessage('server', message);
+            }
         });
     }
 
     onSend(){
         if(this.message){
-            this.socket.send(this.message);
-            this.message = null;
+            this.message.newDate = moment().format('DD/MM/YYYY HH:mm:ss');
+            this.socket.send(JSON.stringify(this.message));
+            this.message.message = null;
         }
     }
 
@@ -45,12 +56,20 @@ export class WebsocketComponent implements OnInit {
         this.connection = false;
     }
 
-    mapMessage(emitter, message){
-        let now = moment().format('DD/MM/YYYY HH:mm:ss');
+    resetMessage(){
+        this.message = {
+            author: null,
+            message: null,
+            newDate: moment().format('DD/MM/YYYY HH:mm:ss')
+        };
+    }
+
+
+    mapMessage(author, message){
         let remap = {
-            author: emitter,
+            author: author,
             message: message,
-            newDate: now
+            newDate: moment().format('DD/MM/YYYY HH:mm:ss')
         };
         this.messages.push(remap);
     }

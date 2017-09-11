@@ -1,13 +1,18 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Websocket'" [icon]="'fa-bar-chart-o'"></app-page-header>
-    <div *ngIf="!connection">
-        <button class="btn btn-primary" type="button" (click)="onConnection()">Connection</button>
+    <div class="row" *ngIf="!connection">
+        <div class="col-xl-9">
+            <input class="form-control" [(ngModel)]="message.author" placeholder="inserisci utente">
+        </div>
+        <div class="col-xl-3 text-right">
+            <button class="btn btn-primary" type="button" (click)="onConnection()">Connection</button>
+        </div>
     </div>
     <div class="row" *ngIf="connection">
-        <div class="col-xl-10">
-            <input class="form-control" [(ngModel)]="message" placeholder="inserisci messaggio">
+        <div class="col-xl-9">
+            <input class="form-control" [(ngModel)]="message.message" placeholder="inserisci messaggio">
         </div>
-        <div class="col-xl-2 text-right">
+        <div class="col-xl-3 text-right">
             <button class="btn btn-primary" type="button" (click)="onSend()">Send</button>
             <button class="btn btn-danger" type="button" (click)="onDestroy()">Close Connection</button>
         </div>
@@ -18,6 +23,7 @@
     <h5>Recieved messages:</h5>
     <hr>
     <p *ngFor="let msg of messages">
-        <strong>({{msg.author}})</strong>
-        {{msg.message}} ({{msg.newDate}})</p>
+        <strong>[{{msg.author}}]</strong>
+        <span>[{{msg.newDate}}]</span>
+        {{msg.message}}</p>
 </div>
