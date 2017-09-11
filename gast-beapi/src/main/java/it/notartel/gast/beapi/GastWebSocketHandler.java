@@ -1,6 +1,7 @@
 package it.notartel.gast.beapi;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -11,25 +12,23 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("SESSION VALUE = " + session.toString());
-		System.out.println("MESSAGE GETPAYLOAD = " + message.toString());
-		
 		if (session != null && session.isOpen()) {
-			try {
-				session.sendMessage(new TextMessage("{\"message\": \"Benvenuto su GAST!!!!!\"}"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			System.out.println("Ricevuto messaggio: " + message.getPayload().toString() + " da: " + session.toString());
 		} else {
-			System.out.println("Non ci sono sessioni aperte per inviare il messaggio");
+			System.out.println("Non ci sono sessioni aperte per ricevere messaggi!");
 		}
 	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("Connessione stabilita");
 		this.session = session;
-		session.sendMessage(new TextMessage("{\"message\": \"Benvenuto su GAST!!!!!\"}"));
+		System.out.println("Connessione stabilita con: " + session.toString());
+		session.sendMessage(new TextMessage("Benvenuto su GAST!"));
 	}
-	
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		super.afterConnectionClosed(session, status);
+		System.out.println("Connessione terminata con: " + session.toString());
+	}
 }
