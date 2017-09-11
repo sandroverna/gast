@@ -14,6 +14,7 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		if (session != null && session.isOpen()) {
 			System.out.println("Ricevuto messaggio: " + message.getPayload().toString() + " da: " + session.toString());
+			session.sendMessage(message);
 		} else {
 			System.out.println("Non ci sono sessioni aperte per ricevere messaggi!");
 		}
