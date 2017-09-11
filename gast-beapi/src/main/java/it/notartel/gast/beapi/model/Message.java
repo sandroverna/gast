@@ -1,4 +1,4 @@
-package it.notartel.gast.beapi.domain;
+package it.notartel.gast.beapi.model;
 
 public class Message {
 	private String content;
