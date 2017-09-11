@@ -10,7 +10,7 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	WebSocketSession session;
 	
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("SESSION VALUE = " + session.toString());
 		System.out.println("MESSAGE GETPAYLOAD = " + message.toString());
 		
@@ -29,6 +29,7 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("Connessione stabilita");
 		this.session = session;
+		session.sendMessage(new TextMessage("{\"message\": \"Benvenuto su GAST!!!!!\"}"));
 	}
 	
 }

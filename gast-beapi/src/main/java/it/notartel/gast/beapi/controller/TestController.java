@@ -1,4 +1,4 @@
-package it.notartel.gast.beapi.web;
+package it.notartel.gast.beapi.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
