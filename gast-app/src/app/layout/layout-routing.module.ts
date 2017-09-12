@@ -6,6 +6,7 @@ const routes: Routes = [
     {
         path: '', component: LayoutComponent,
         children: [
+            { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'websocket', loadChildren: './websocket/websocket.module#WebsocketModule' },
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
