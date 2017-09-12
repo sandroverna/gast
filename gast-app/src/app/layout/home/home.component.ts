@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {}
 
     goRoom(room: number) {
-        this.router.navigate(['./websocket']);
+        this.router.navigate(['./websocket'], { queryParams: { room: room } });
     }
 
 }

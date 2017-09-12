@@ -5,11 +5,10 @@ import websocketConnect from 'rxjs-websockets'
 
 @Injectable()
 export class WebSocketServiceModel {
-    private CHAT_URL: string = 'ws://localhost:8080/gastwebsocket';
     private inputStream: QueueingSubject<string>;
     public messages: Observable<string>;
 
-    public connect() {
+    public connect(url: string) {
         if (this.messages)
             return;
 
@@ -17,7 +16,7 @@ export class WebSocketServiceModel {
         // observer subscribes. This socket is shared with subsequent observers
         // and closed when the observer count falls to zero.
         this.messages = websocketConnect(
-            this.CHAT_URL,
+            url,
             this.inputStream = new QueueingSubject<string>()
         ).messages.share()
     }

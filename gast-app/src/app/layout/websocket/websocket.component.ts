@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { Subscription } from 'rxjs/Subscription'
@@ -15,20 +16,37 @@ import {Message} from '../../model/websocket';
     animations: [routerTransition()]
 })
 export class WebsocketComponent implements OnInit {
+    private heading: string;
     private socketSubscription: Subscription;
     private messages: Message[] = [];
     private message: Message;
     private connection: boolean = false;
+    private CHAT_URL: string = 'ws://localhost:8080/gastwebsocket';
 
-    constructor(public socket: WebSocketServiceModel) {}
+    private sub: any;
+    private room: any;
+
+    constructor(
+        public socket: WebSocketServiceModel,
+        private route: ActivatedRoute,
+    ) {}
 
     ngOnInit() {
+        this.sub = this.route
+            .queryParams
+            .subscribe(params => {
+                // Defaults to 0 if no query param provided.
+                this.room = +params['room'] || 0;
+            });
+        console.log('sub', this.sub);
+        console.log('room', this.room);
+        this.heading = 'Websocket | stanza:' + this.room
         this.resetMessage();
     }
 
     onConnection(){
         if(this.message.author){
-            this.socket.connect();
+            this.socket.connect(this.CHAT_URL);
             this.connection = true;
             console.log('message', this.message);
             this.socketSubscription = this.socket.messages.subscribe((message: string) => {
