@@ -1,6 +1,5 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { routerTransition } from '../../router.animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 
 import { Subscription } from 'rxjs/Subscription'
@@ -12,8 +11,7 @@ import {Message} from '../../model/websocket';
 @Component({
     selector: 'app-websocket',
     templateUrl: './websocket.component.html',
-    styleUrls: ['./websocket.component.scss'],
-    animations: [routerTransition()]
+    styleUrls: ['./websocket.component.scss']
 })
 export class WebsocketComponent implements OnInit {
     private heading: string;
@@ -28,19 +26,20 @@ export class WebsocketComponent implements OnInit {
 
     constructor(
         public socket: WebSocketServiceModel,
-        private route: ActivatedRoute,
+        private activate: ActivatedRoute,
     ) {}
 
     ngOnInit() {
-        this.sub = this.route
+        console.log('ActivatedRoute', this.activate);
+        this.sub = this.activate
             .queryParams
             .subscribe(params => {
                 // Defaults to 0 if no query param provided.
                 this.room = +params['room'] || 0;
             });
-        console.log('sub', this.sub);
-        console.log('room', this.room);
-        this.heading = 'Websocket | stanza:' + this.room
+        if(this.room){
+            this.heading = 'stanza numero ' + this.room;
+        }
         this.resetMessage();
     }
 

@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 // services
-import {ChatService} from './shared/services/chat.service';
-import {WebSocketServiceBase} from './shared/services/websocket.service.base';
 import {WebSocketServiceModel} from './shared/services/websocket.service.model';
 import {QueueingSubject} from './shared/services/queueing.service';
+import {ExtendedHttpService} from "./shared/services/interceptor.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -30,6 +32,7 @@ export function HttpLoaderFactory(http: Http) {
         BrowserAnimationsModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         AppRoutingModule,
         TranslateModule.forRoot({
             loader: {
@@ -39,7 +42,16 @@ export function HttpLoaderFactory(http: Http) {
             }
         })
     ],
-    providers: [AuthGuard, ChatService, WebSocketServiceBase, WebSocketServiceModel, QueueingSubject],
+    providers: [
+        AuthGuard,
+        CookieService,
+        WebSocketServiceModel,
+        QueueingSubject,
+        {
+            provide: Http,
+            useClass: ExtendedHttpService
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

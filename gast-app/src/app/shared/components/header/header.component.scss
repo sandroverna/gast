@@ -82,6 +82,10 @@ $topnavreverse-background-color: #7a93cc;
     padding: 20px;
 }
 
+.navbar .navbar-nav .nav-item {
+    border-left: 1px solid #000;
+}
+
 .navbar .navbar-nav .nav-item .nav-link {
     display: table-cell;
     vertical-align: middle;
@@ -90,6 +94,7 @@ $topnavreverse-background-color: #7a93cc;
     padding: 0px;
     color: #FFF !important;
     background: $topnav-background-color !important;
+    border-left: 1px solid #e1ecf0;
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover {
