@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,7 +16,7 @@ import { AuthGuard } from './shared';
 // services
 import {WebSocketServiceModel} from './shared/services/websocket.service.model';
 import {QueueingSubject} from './shared/services/queueing.service';
-import {ExtendedHttpService} from "./shared/services/interceptor.service";
+import {NoopInterceptor} from "./shared/services/interceptor.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -48,8 +49,9 @@ export function HttpLoaderFactory(http: Http) {
         WebSocketServiceModel,
         QueueingSubject,
         {
-            provide: Http,
-            useClass: ExtendedHttpService
+            provide: HTTP_INTERCEPTORS,
+            useClass: NoopInterceptor,
+            multi: true,
         }
     ],
     bootstrap: [AppComponent]

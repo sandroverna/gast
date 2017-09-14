@@ -1,41 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Http, Request, RequestOptions, RequestOptionsArgs, Response, XHRBackend} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Router} from '@angular/router';
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
-export class ExtendedHttpService extends Http {
+export class NoopInterceptor implements HttpInterceptor {
 
-    constructor(
-        backend: XHRBackend,
-        defaultOptions: RequestOptions,
-        private router: Router
-    ) {
-        super(backend, defaultOptions);
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const headersReq = req.clone({headers: req.headers.set('Access-Control-Expose-Headers', 'pippo, Content-Length')});
+        console.log('Request Headers', headersReq.headers);
+        return next.handle(headersReq);
     }
-
-    request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-        console.log('url ', url);
-        console.log('intercepting request ', options);
-        /*
-        console.log('this ', this);
-        */
-        return super.request(url, options).catch(this.catchErrors());
-    }
-
-
-    private catchErrors() {
-        return (res: Response) => {
-            console.log('errore http', res.status);
-            if (res.status === 401 || res.status === 403) {
-
-            }
-            return Observable.throw(res);
-        };
-    }
-
 }
