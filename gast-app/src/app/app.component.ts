@@ -10,6 +10,7 @@ export class AppComponent {
     constructor(
         private translate: TranslateService
     ) {
+        localStorage.clear();
         translate.addLangs(['it', 'en', 'fr', 'ur', 'es', 'fa']);
         translate.setDefaultLang('it');
         const browserLang = translate.getBrowserLang();

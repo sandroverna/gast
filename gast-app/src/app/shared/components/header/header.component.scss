@@ -2,7 +2,6 @@ $topnav-background-color: #39507a;
 $topnavreverse-background-color: #7a93cc;
 .topnav {
     border-radius: 0;
-    background-color: $topnav-background-color;
     padding : 5px;
     z-index:2;
     .text-center{
@@ -70,11 +69,18 @@ $topnavreverse-background-color: #7a93cc;
 }
 
 .header .navbar {
-    background: $topnav-background-color !important;
+    padding: 0px;
 }
 
-.navbar {
-    padding: 0px;
+.navbar h2 {
+    color: #fff;
+    margin-left: 40px;
+    margin-top: 88px;
+    text-transform: capitalize;
+}
+
+.navbar .navbar-collapse {
+    background: $topnav-background-color !important;
 }
 
 .navbar .logo {
@@ -82,8 +88,12 @@ $topnavreverse-background-color: #7a93cc;
     padding: 20px;
 }
 
-.navbar .navbar-nav .nav-item {
+.navbar .navbar-nav.ml-auto .nav-item {
     border-left: 1px solid #000;
+}
+
+.navbar .navbar-nav.mr-auto .nav-item {
+    border-right: 1px solid #e1ecf0;
 }
 
 .navbar .navbar-nav .nav-item .nav-link {
@@ -94,7 +104,14 @@ $topnavreverse-background-color: #7a93cc;
     padding: 0px;
     color: #FFF !important;
     background: $topnav-background-color !important;
+}
+
+.navbar .navbar-nav.ml-auto .nav-item .nav-link {
     border-left: 1px solid #e1ecf0;
+}
+
+.navbar .navbar-nav.mr-auto .nav-item .nav-link {
+    border-right: 1px solid #000;
 }
 
 .navbar .navbar-nav .nav-item .nav-link:hover {

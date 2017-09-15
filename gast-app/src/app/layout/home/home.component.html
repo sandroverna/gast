@@ -1,5 +1,6 @@
-<div>
-    <app-page-header [heading]="'Home'" [icon]="'fa-bar-chart-o'"></app-page-header>
+<div *ngIf="isLoggedIn">
+    <app-page-header [heading]="user.type" [icon]="'fa-bar-chart-o'"></app-page-header>
+    <hr>
     <div class="row">
         <div class="col col-xl-12">
             <div class="card mb-3">

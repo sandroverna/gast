@@ -1,5 +1,5 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import * as moment from 'moment';
 
 import { Subscription } from 'rxjs/Subscription'
@@ -31,11 +31,11 @@ export class WebsocketComponent implements OnInit {
 
     ngOnInit() {
         console.log('ActivatedRoute', this.activate);
-        this.sub = this.activate
+        let sub = this.activate
             .queryParams
             .subscribe(params => {
                 // Defaults to 0 if no query param provided.
-                this.room = +params['room'] || 0;
+                this.room = params['room'] || 0;
             });
         if(this.room){
             this.heading = 'stanza numero ' + this.room;

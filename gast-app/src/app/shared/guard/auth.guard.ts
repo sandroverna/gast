@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -26,11 +26,6 @@ export class AuthGuard implements CanActivate {
                 console.log("HttpClient headers", print);
             });
 
-        if (localStorage.getItem('isLoggedin')) {
-            return true;
-        }
-
-        this.router.navigate(['/login']);
-        return false;
+        return true;
     }
 }

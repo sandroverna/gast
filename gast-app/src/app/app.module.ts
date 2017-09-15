@@ -17,6 +17,7 @@ import { AuthGuard } from './shared';
 import {WebSocketServiceModel} from './shared/services/websocket.service.model';
 import {QueueingSubject} from './shared/services/queueing.service';
 import {NoopInterceptor} from "./shared/services/interceptor.service";
+import {UserService} from "./shared/services/user.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: Http) {
         CookieService,
         WebSocketServiceModel,
         QueueingSubject,
+        UserService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NoopInterceptor,
