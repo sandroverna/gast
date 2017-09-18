@@ -6,15 +6,23 @@
             </a>
         </div>
         <div class="collapse navbar-collapse">
-            <div *ngIf="user.isAuth" class="navbar-multi">
-                <ul class="navbar-nav mr-auto mt-md-0">
+            <div class="navbar-nav mr-auto">
+                <ul *ngIf="user.isAuth" class="navbar-nav mt-md-0">
                     <li class="dropdown" ngbDropdown>
                         <h2 class="ruolo">
                             {{user.type}}
                         </h2>
                     </li>
                 </ul>
-                <ul *ngIf="user.room" class="navbar-nav mr-auto mt-md-0">
+                <ul *ngIf="!user.isAuth" class="navbar-nav mt-md-0">
+                    <li *ngFor="let type of userTypes" class="nav-item dropdown" ngbDropdown>
+                        <a (click)="onType(type)" href="javascript:void(0)" class="nav-link text-center">
+                            <i class="fa fa-user fa-2x"></i>
+                            <p>{{ type }}</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul *ngIf="user.isAuth && user.room" class="navbar-nav mt-md-0">
                     <li class="dropdown" ngbDropdown>
                         <h2 class="avviso">
                             avviso #{{user.room}}
@@ -22,30 +30,35 @@
                     </li>
                 </ul>
             </div>
-            <ul *ngIf="!user.isAuth" class="navbar-nav mr-auto mt-md-0">
-                <li *ngFor="let type of userTypes" class="nav-item dropdown" ngbDropdown>
-                    <a (click)="onType(type)" href="javascript:void(0)" class="nav-link text-center"> <!--  [routerLink]="['/home', type]" -->
-                        <i class="fa fa-user fa-2x"></i>
-                        <p>{{ type }}</p>
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mt-md-0">
-                <li class="nav-item dropdown" ngbDropdown>
-                    <a href="javascript:void(0)" class="nav-link text-center" ngbDropdownToggle>
-                        <i class="fa fa-user-circle fa-2x"></i>
-                        <p>Francesco<br>Riparelli</p>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <!--
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        -->
-                        <a class="dropdown-item" (click)="onLoggedout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                    </div>
-                </li>
-            </ul>
+            <div class="navbar-nav ml-auto">
+                <ul *ngIf="user.isAuth && user.room" class="navbar-nav mt-md-0">
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link text-center">
+                            <i class="fa fa-pencil fa-2x"></i>
+                            <p>deposita<br>avviso cartaceo</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mt-md-0">
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link text-center" ngbDropdownToggle>
+                            <i class="fa fa-user-circle fa-2x"></i>
+                            <p>Francesco<br>Riparelli</p>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!--
+							<a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> Profile</a>
+							<a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+							<a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-fw fa-gear"></i> Settings</a>
+							-->
+                            <a class="dropdown-item" (click)="onLoggedout()" href="javascript:void(0)">
+                                <i class="fa fa-fw fa-power-off"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>

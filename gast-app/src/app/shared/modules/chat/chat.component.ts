@@ -37,6 +37,7 @@ export class ChatComponent implements OnInit {
     ngOnInit() {
         this.user = this.userService.init();
         this.resetMessage();
+        this.onConnection();
     }
 
     onConnection(){
