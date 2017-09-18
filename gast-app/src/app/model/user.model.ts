@@ -1,3 +1,5 @@
 export interface User {
-    type: any
+    isAuth: boolean,
+    type: any,
+    room?: number
 }

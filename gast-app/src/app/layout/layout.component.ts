@@ -13,6 +13,7 @@ export class LayoutComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        console.log('url layout', this.router.url);
         if (this.router.url === '/') {
             this.router.navigate(['/home']);
         }

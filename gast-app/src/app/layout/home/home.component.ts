@@ -11,8 +11,6 @@ import * as moment from 'moment';
 })
 export class HomeComponent implements OnInit {
     private user: User;
-    private isLoggedIn: boolean;
-    private sub: any;
     private th = ['avviso', 'descrizione', 'prezzo base', 'delegato', 'n. offerte', 'stato'];
 
     constructor(
@@ -22,23 +20,17 @@ export class HomeComponent implements OnInit {
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
-        });
-        this.userService.isLoggedIn().subscribe(res => {
-            this.isLoggedIn = res;
-            if(!this.isLoggedIn){
-                this.user = this.userService.reset();
-            }
+            console.log('home', this.user)
         });
     }
 
     ngOnInit() {
-        if(!this.isLoggedIn){
-            this.user = this.userService.reset();
-        }
+        this.user = this.userService.init();
+        console.log('user home', this.user);
     }
 
     goRoom(room: number) {
-        this.router.navigate(['./websocket'], { queryParams: { room: room } });
+        this.router.navigate(['./room', room]);
     }
 
 }

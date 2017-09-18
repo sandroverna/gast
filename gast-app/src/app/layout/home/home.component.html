@@ -1,10 +1,8 @@
-<div *ngIf="isLoggedIn">
-    <app-page-header [heading]="user.type" [icon]="'fa-bar-chart-o'"></app-page-header>
-    <hr>
+<div *ngIf="user.isAuth">
     <div class="row">
         <div class="col col-xl-12">
             <div class="card mb-3">
-                <div class="card-header">Hoverable rows</div>
+                <div class="card-header">Gestione avvisi</div>
                 <table class="card-block table table-hover">
                     <thead>
                     <tr>

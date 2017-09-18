@@ -10,8 +10,7 @@ import { User } from '../../../model/user.model';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    private user: User;
-    private isLoggedIn: boolean;
+    public user: User;
     public userTypes = ['gestore', 'delegato', 'giudice', 'cancelliere'];
 
     constructor(
@@ -21,25 +20,20 @@ export class HeaderComponent implements OnInit {
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
-        });
-        this.userService.isLoggedIn().subscribe(res => {
-            this.isLoggedIn = res;
-            if(!this.isLoggedIn){
-                this.user = this.userService.reset();
-            }
+            console.log('header', this.user)
         });
 
-        this.router.events.subscribe((val) => {
-            if (val instanceof NavigationEnd && window.innerWidth <= 992) {
-                this.toggleSidebar();
-            }
-        });
+        /*
+         this.router.events.subscribe((val) => {
+         if (val instanceof NavigationEnd && window.innerWidth <= 992) {
+         this.toggleSidebar();
+         }
+         });
+        */
     }
 
     ngOnInit() {
-        if(!this.isLoggedIn){
-            this.user = this.userService.reset();
-        }
+        this.user = this.userService.init();
     }
 
     toggleSidebar() {

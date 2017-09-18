@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import * as moment from 'moment';
-
 import { Subscription } from 'rxjs/Subscription'
+
 import { WebSocketServiceModel } from '../../shared/services/websocket.service.model'
+import { UserService } from '../../shared/services/user.service';
 
-import {Message} from '../../model/websocket';
+import { Message } from '../../model/websocket';
+import { User } from '../../model/user.model';
 
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-websocket',
@@ -14,6 +15,8 @@ import {Message} from '../../model/websocket';
     styleUrls: ['./websocket.component.scss']
 })
 export class WebsocketComponent implements OnInit {
+    private user: User;
+
     private heading: string;
     private socketSubscription: Subscription;
     private messages: Message[] = [];
@@ -21,24 +24,20 @@ export class WebsocketComponent implements OnInit {
     private connection: boolean = false;
     private CHAT_URL: string = 'ws://localhost:8080/gastwebsocket';
 
-    private sub: any;
-    private room: any;
-
     constructor(
         public socket: WebSocketServiceModel,
-        private activate: ActivatedRoute,
-    ) {}
+        private userService: UserService
+    ) {
+        this.userService.userInfo().subscribe(res => {
+            this.user = res;
+            console.log('chat', this.user)
+        });
+    }
 
     ngOnInit() {
-        console.log('ActivatedRoute', this.activate);
-        let sub = this.activate
-            .queryParams
-            .subscribe(params => {
-                // Defaults to 0 if no query param provided.
-                this.room = params['room'] || 0;
-            });
-        if(this.room){
-            this.heading = 'stanza numero ' + this.room;
+        this.user = this.userService.init();
+        if(this.user.room){
+            this.heading = 'stanza numero ' + this.user.room;
         }
         this.resetMessage();
     }

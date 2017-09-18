@@ -8,6 +8,14 @@ export class UserService {
     private logger = new Subject<boolean>();
     private info = new Subject<any>();
 
+    init(): any {
+        if(localStorage.getItem('user')){
+            return JSON.parse(localStorage.getItem('user'));
+        } else {
+            return this.reset();
+        }
+    }
+
     isLoggedIn(): Observable<boolean> {
         return this.logger.asObservable();
     }
@@ -17,9 +25,11 @@ export class UserService {
     }
 
     logIn(user: any) {
+        console.log('logIn');
+        user.isAuth = true;
         localStorage.setItem('user', JSON.stringify(user));
         this.info.next(user);
-        this.logger.next(true);
+        this.logger.next(user.isAuth);
     }
 
     logOut() {
@@ -28,10 +38,18 @@ export class UserService {
         this.logger.next(false);
     }
 
+    inRoom(room: number) {
+        this.user = this.init();
+        this.user.room = room;
+        this.logIn(this.user);
+    }
+
     reset(): any {
+        console.log('reset');
         this.user = {
+            isAuth: false,
             type: null
-        }
+        };
         return this.user;
     }
 }

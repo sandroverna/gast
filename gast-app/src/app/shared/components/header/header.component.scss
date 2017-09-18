@@ -79,6 +79,14 @@ $topnavreverse-background-color: #7a93cc;
     text-transform: capitalize;
 }
 
+.navbar h2.ruolo {
+    color: #fff;
+}
+
+.navbar h2.avviso {
+    color: #fff;
+}
+
 .navbar .navbar-collapse {
     background: $topnav-background-color !important;
 }
@@ -86,6 +94,11 @@ $topnavreverse-background-color: #7a93cc;
 .navbar .logo {
     background-color: #FFF;
     padding: 20px;
+}
+
+.navbar .navbar-multi {
+    display: flex;
+    flex-direction: row;
 }
 
 .navbar .navbar-nav.ml-auto .nav-item {
