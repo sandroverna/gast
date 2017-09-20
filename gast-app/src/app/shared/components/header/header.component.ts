@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.userService.init();
-        this.avviso = this.avvisoService.reset();
+        this.avviso = this.avvisoService.avvisoByRoute(this.router.url);
     }
 
     toggleSidebar() {

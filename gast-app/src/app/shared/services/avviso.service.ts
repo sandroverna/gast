@@ -32,6 +32,21 @@ export class AvvisoService {
         this.info.next(this.avviso);
     }
 
+    avvisoByRoute(route) {
+        let routing = route.split('/');
+        switch(routing[1]) {
+            case 'home': {
+                return this.reset();
+            }
+            case 'room': {
+                return this.init();
+            }
+            default: {
+                return this.reset();
+            }
+        };
+    }
+
     reset(): any {
         console.log('reset');
         this.avviso = {
