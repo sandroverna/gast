@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 
 import { WebSocketServiceModel } from '../../../shared/services/websocket.service.model'
@@ -9,13 +9,14 @@ import { AppSettings } from '../../../appSettings';
 import { User, Avviso, Message } from '../../../model';
 
 import * as moment from 'moment';
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
     private user: User;
     private avviso: Avviso;
 
@@ -24,6 +25,7 @@ export class ChatComponent implements OnInit {
     private messages: Message[] = [];
     private message: Message;
     private connection: boolean = false;
+    public reset: Observable<string>;
 
     constructor(
         public socket: WebSocketServiceModel,
@@ -44,6 +46,13 @@ export class ChatComponent implements OnInit {
         this.avviso = this.avvisoService.init();
         this.resetMessage();
         this.onConnection(this.avviso.id);
+    }
+
+    ngOnDestroy() {
+        this.socket.unconnect(this.reset);
+        this.socketSubscription.unsubscribe();
+        this.connection = false;
+        this.messages = [];
     }
 
     onConnection(avviso){
@@ -71,12 +80,6 @@ export class ChatComponent implements OnInit {
             this.socket.send(JSON.stringify(this.message));
             this.message.message = null;
         }
-    }
-
-    onDestroy() {
-        this.socketSubscription.unsubscribe();
-        this.connection = false;
-        this.messages = [];
     }
 
     resetMessage(){

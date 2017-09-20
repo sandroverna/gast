@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     private fields = ['avviso', 'descrizione', 'prezzo', 'delegato', 'offerte', 'stato'];
     private avvisi = [
         {
-            avviso: '200',
+            avviso: '100',
             descrizione: 'Praesent eget euismod dui, et venenatis sapien.',
             prezzo: 985400.25,
             delegato: 'Francesco Riparelli',
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
             stato: 'OFFERTE'
         },
         {
-            avviso: '100',
+            avviso: '200',
             descrizione: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             prezzo: 20000.75,
             delegato: 'Francesco Riparelli',
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
             stato: 'AMMISSIONE_OFFERTE'
         },
         {
-            avviso: '200',
+            avviso: '300',
             descrizione: 'Donec eu tortor cursus, congue mi nec, bibendum ex.',
             prezzo: 5400.00,
             delegato: 'Francesco Riparelli',
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
             stato: 'APERTURA_BUSTE'
         },
         {
-            avviso: '200',
+            avviso: '400',
             descrizione: 'Sed metus magna, porttitor ut diam non, porta efficitur quam.',
             prezzo: 5895400.80,
             delegato: 'Francesco Riparelli',

@@ -12,7 +12,10 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let avviso of avvisi">
-                        <td *ngFor="let field of fields">{{ avviso[field] }}</td>
+                        <td *ngFor="let field of fields" [ngSwitch]="field">
+                            <span *ngSwitchCase="'prezzo'">{{ avviso[field] | currency:'EUR':true }}</span>
+                            <span *ngSwitchDefault>{{ avviso[field] }}</span>
+                        </td>
                         <td class="text-right">
                             <button [disabled]="isDisabled(avviso.stato)" class="btn btn-primary" type="button" (click)="goRoom(avviso.avviso, avviso.stato)">vai alla stanza</button>
                         </td>

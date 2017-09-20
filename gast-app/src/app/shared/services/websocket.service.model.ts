@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { QueueingSubject } from 'queueing-subject'
 import { Observable } from 'rxjs/Observable'
 import websocketConnect from 'rxjs-websockets'
+import {isUndefined} from "util";
 
 @Injectable()
 export class WebSocketServiceModel {
@@ -27,5 +28,9 @@ export class WebSocketServiceModel {
         // A regular Subject can be used to discard messages sent when the websocket
         // is disconnected.
         this.inputStream.next(message);
+    }
+
+    public unconnect(reset){
+        this.messages = reset;
     }
 }

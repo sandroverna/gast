@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
         private activate: ActivatedRoute,
         private userService: UserService,
         private avvisoService: AvvisoService,
-        public router: Router
+        public router: Router,
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;

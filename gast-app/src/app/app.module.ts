@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,6 +19,10 @@ import {NoopInterceptor} from "./shared/services/interceptor.service";
 import {UserService} from "./shared/services/user.service";
 import {AvvisoService} from "./shared/services/avviso.service";
 
+// pipes
+import {CurrencyPipe, DecimalPipe, PercentPipe} from '@angular/common';
+import { UnderscorePipe } from './shared/pipes/underscore.pipe';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
@@ -28,7 +31,8 @@ export function HttpLoaderFactory(http: Http) {
 }
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        UnderscorePipe
     ],
     imports: [
         BrowserModule,
@@ -52,11 +56,15 @@ export function HttpLoaderFactory(http: Http) {
         QueueingSubject,
         UserService,
         AvvisoService,
+        CurrencyPipe,
+        DecimalPipe,
+        PercentPipe,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NoopInterceptor,
             multi: true,
-        }
+        },
+        { provide: LOCALE_ID, useValue: 'it-IT'}
     ],
     bootstrap: [AppComponent]
 })
