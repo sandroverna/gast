@@ -1,0 +1,26 @@
+<div>
+    <div class="row" *ngIf="!connection">
+        <div class="col-xl-12">
+            problemi di connessione
+        </div>
+    </div>
+    <div *ngIf="connection">
+        <div class="row">
+            <div class="col-xl-12">
+                <input class="form-control" [(ngModel)]="message.message" placeholder="inserisci messaggio">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 text-right">
+                <button class="btn btn-primary" type="button" (click)="onSend()" style="margin-top: 10px;">Send</button>
+            </div>
+        </div>
+        <hr>
+        <h5>Recieved messages:</h5>
+        <hr>
+        <p *ngFor="let msg of messages">
+            <strong>[{{msg.author}}]</strong>
+            <span>[{{msg.newDate}}]</span>
+            {{msg.message}}</p>
+    </div>
+</div>

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 
-import { WebSocketServiceModel } from '../../shared/services/websocket.service.model'
-import { UserService } from '../../shared/services/user.service';
+import { WebSocketServiceModel } from '../../../shared/services/websocket.service.model'
+import { UserService } from '../../../shared/services/user.service';
 
-import { Message } from '../../model/websocket';
-import { User } from '../../model/user.model';
+import { Message } from '../../../model/websocket';
+import { User } from '../../../model/user.model';
 
 import * as moment from 'moment';
 
 @Component({
-    selector: 'app-websocket',
-    templateUrl: './websocket.component.html',
-    styleUrls: ['./websocket.component.scss']
+    selector: 'app-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss']
 })
-export class WebsocketComponent implements OnInit {
+export class ChatComponent implements OnInit {
     private user: User;
 
     private heading: string;
@@ -36,10 +36,8 @@ export class WebsocketComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.userService.init();
-        if(this.user.room){
-            this.heading = 'stanza numero ' + this.user.room;
-        }
         this.resetMessage();
+        this.onConnection();
     }
 
     onConnection(){
@@ -77,7 +75,7 @@ export class WebsocketComponent implements OnInit {
 
     resetMessage(){
         this.message = {
-            author: null,
+            author: this.user.type,
             message: null,
             newDate: moment().format('DD/MM/YYYY HH:mm:ss')
         };

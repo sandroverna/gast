@@ -1,5 +1,5 @@
-<div [@routerTransition]>
-    <app-page-header [heading]="'Websocket'" [icon]="'fa-bar-chart-o'"></app-page-header>
+<div>
+    <app-page-header [heading]="heading" [icon]="'fa-bar-chart-o'"></app-page-header>
     <div class="row" *ngIf="!connection">
         <div class="col-xl-9">
             <input class="form-control" [(ngModel)]="message.author" placeholder="inserisci utente">

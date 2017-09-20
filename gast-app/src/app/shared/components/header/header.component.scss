@@ -1,8 +1,8 @@
-$topnav-background-color: #FFF;
+$topnav-background-color: #39507a;
+$topnavreverse-background-color: #7a93cc;
 .topnav {
     border-radius: 0;
-    background-color: $topnav-background-color;
-    padding : 6px;
+    padding : 5px;
     z-index:2;
     .text-center{
         text-align: center;
@@ -67,7 +67,76 @@ $topnav-background-color: #FFF;
         }
     }
 }
+
 .header .navbar {
+    padding: 0px;
+}
+
+.navbar h2 {
+    color: #fff;
+    margin-left: 40px;
+    margin-top: 88px;
+    text-transform: capitalize;
+}
+
+.navbar h2.ruolo {
+    color: #fff;
+}
+
+.navbar h2.avviso {
+    color: #fff;
+}
+
+.navbar .navbar-collapse {
     background: $topnav-background-color !important;
-    border-bottom: 1px solid #000000;
+}
+
+.navbar .logo {
+    background-color: #FFF;
+    padding: 20px;
+}
+
+.navbar .navbar-multi {
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar .navbar-nav.ml-auto .nav-item {
+    border-left: 1px solid #000;
+}
+
+.navbar .navbar-nav.mr-auto .nav-item {
+    border-right: 1px solid #e1ecf0;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    display: table-cell;
+    vertical-align: middle;
+    width: 160px;
+    height: 160px;
+    padding: 0px;
+    color: #FFF !important;
+    background: $topnav-background-color !important;
+}
+
+.navbar .navbar-nav.ml-auto .nav-item .nav-link {
+    border-left: 1px solid #e1ecf0;
+}
+
+.navbar .navbar-nav.mr-auto .nav-item .nav-link {
+    border-right: 1px solid #000;
+}
+
+.navbar .navbar-nav .nav-item .nav-link:hover {
+    color: #FFF !important;
+    background: $topnavreverse-background-color !important;
+}
+
+.navbar .navbar-nav .nav-item .nav-link.dropdown-toggle:after {
+    content: none;
+}
+
+.navbar .navbar-nav .nav-item .nav-link p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
 }
