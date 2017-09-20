@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -24,6 +25,9 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
 		
+		System.out.println("MESSAGGIO RICEVUTO = " + message.toString());
+		System.out.println("MESSAGGIO RICEVUTO PAYLOAD = " + message.getPayload().toString());
+		
 		for(WebSocketSession webSocketSession : sessions) {
 			webSocketSession.sendMessage(message);
 		}
@@ -34,13 +38,14 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//the messages will be broadcasted to all users.
+		HttpHeaders headers = session.getHandshakeHeaders();
+		System.out.println("HEADERS = " + headers.toString());
 		sessions.add(session);
 		System.out.println("Connessione stabilita con: " + session.toString());
 		messages.forEach(m -> {
 			try {
 				session.sendMessage(m);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
