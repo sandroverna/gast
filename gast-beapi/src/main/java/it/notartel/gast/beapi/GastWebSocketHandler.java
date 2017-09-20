@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ScheduledFuture;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -13,59 +15,85 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.google.gson.Gson;
-
-import it.notartel.gast.beapi.model.Message;
+import it.notartel.gast.beapi.model.Room;
 
 @Component
 public class GastWebSocketHandler extends TextWebSocketHandler {
-	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
-	List<TextMessage> messages = new CopyOnWriteArrayList<>();
+	private ConcurrentHashMap<String, Room> map = new ConcurrentHashMap<String, Room>();
+	
+	//List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+	//List<TextMessage> messages = new CopyOnWriteArrayList<>();
+	
+	private String getRoom(WebSocketSession session) {
+		Map<String, String> queryString = Util.getQueryMap(session.getUri().getQuery());
+		if (queryString.containsKey("room")) {
+			return queryString.get("room");
+		}
+		
+		return null;
+	}
+	
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
-		System.out.println("MESSAGGIO RICEVUTO PAYLOAD = " + message.getPayload().toString());
-		
-		for(WebSocketSession webSocketSession : sessions) {
-			webSocketSession.sendMessage(message);
+		String roomId = this.getRoom(session);
+		if (roomId != null) {
+			Room room = map.get(roomId);
+			List<WebSocketSession> sessions = room.getUsers();
+					
+			for(WebSocketSession webSocketSession : sessions) {
+				webSocketSession.sendMessage(message);
+			}
+					
+			room.getMessages().add(message);
 		}
-		
-		messages.add(message);
 	}
+	
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//the messages will be broadcasted to all users.
+		//HttpHeaders headers = session.getHandshakeHeaders();
+		//System.out.println("[ID = " + session.getId() + " HEADERS = " + headers.toString() + "]");
+		//System.out.println("[ID = " + session.getId() + " URL = " + session.getUri().getPath() + "]");
+		//System.out.println("[ID = " + session.getId() + " PARAMS = " + session.getUri().getQuery() + "]");
 		System.out.println("Connessione stabilita con: " + session.toString());
-		HttpHeaders headers = session.getHandshakeHeaders();
 		
-		System.out.println("[ID = " + session.getId() + " HEADERS = " + headers.toString() + "]");
-		System.out.println("[ID = " + session.getId() + " URL = " + session.getUri().getPath() + "]");
-		System.out.println("[ID = " + session.getId() + " PARAMS = " + session.getUri().getQuery() + "]");
+		String roomId = this.getRoom(session);
 		
-		Map<String, String> queryString = Util.getQueryMap(session.getUri().getQuery());
-		System.out.println("ROOM = " + queryString.get("room"));
-		
-		sessions.add(session);
-		
-		messages.forEach(m -> {
-			try {
-				session.sendMessage(m);
-			} catch (IOException e) {
-				e.printStackTrace();
+		if (roomId != null) {
+			if (!map.containsKey(roomId)) {
+				Room room = new Room(roomId);
+				room.getUsers().add(session);
+				map.put(roomId, room);
+			} else {
+				map.get(roomId).getUsers().add(session);
 			}
-		});
+			
+			map.get(roomId).getMessages().forEach(m -> {
+				try {
+					session.sendMessage(m);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+		} else {
+			session.close();
+		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession terminatedSession, CloseStatus status) throws Exception {
+		String roomId = this.getRoom(terminatedSession);
 		
-		Optional<WebSocketSession> session = sessions.
-				stream().
-				filter(s -> s.getId().equals(terminatedSession.getId())).
-				findFirst();
-		
-		session.ifPresent(sessions::remove);
-		System.out.println("Connessione terminata con: " + terminatedSession.toString());
+		if (roomId != null) {
+			Optional<WebSocketSession> session = map.get(roomId).getUsers().
+					stream().
+					filter(s -> s.getId().equals(terminatedSession.getId())).
+					findFirst();
+			
+			session.ifPresent(map.get(roomId).getUsers()::remove);
+			System.out.println("Connessione terminata con: " + terminatedSession.toString());
+		}
 	}
 }
