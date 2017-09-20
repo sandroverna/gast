@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription'
 
 import { WebSocketServiceModel } from '../../../shared/services/websocket.service.model'
 import { UserService } from '../../../shared/services/user.service';
+import { AppSettings } from '../../../appSettings';
 
 import { Message } from '../../../model/websocket';
 import { User } from '../../../model/user.model';
@@ -22,7 +23,6 @@ export class ChatComponent implements OnInit {
     private messages: Message[] = [];
     private message: Message;
     private connection: boolean = false;
-    private CHAT_URL: string = 'ws://localhost:8080/gastwebsocket';
 
     constructor(
         public socket: WebSocketServiceModel,
@@ -37,12 +37,12 @@ export class ChatComponent implements OnInit {
     ngOnInit() {
         this.user = this.userService.init();
         this.resetMessage();
-        this.onConnection();
+        this.onConnection(this.user.room);
     }
 
-    onConnection(){
+    onConnection(avviso){
         if(this.message.author){
-            this.socket.connect(this.CHAT_URL);
+            this.socket.connect(AppSettings.WS_CHAT + '?room=' + avviso);
             this.connection = true;
             console.log('message', this.message);
             this.socketSubscription = this.socket.messages.subscribe((message: string) => {

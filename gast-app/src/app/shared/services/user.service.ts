@@ -33,8 +33,10 @@ export class UserService {
     }
 
     logOut() {
-        localStorage.removeItem('user');
-        this.info.next(null);
+        this.user = this.reset();
+        localStorage.setItem('user', JSON.stringify(this.user));
+        //localStorage.removeItem('user');
+        this.info.next(this.user);
         this.logger.next(false);
     }
 
