@@ -6,33 +6,16 @@
                 <table class="card-block table table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th *ngFor="let title of titles">{{ title }}</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td class="text-right"><button class="btn btn-primary" type="button" (click)="goRoom('1')">vai alla stanza</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td class="text-right"><button class="btn btn-primary" type="button" (click)="goRoom('2')">vai alla stanza</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td class="text-right"><button class="btn btn-primary" type="button" (click)="goRoom('3')">vai alla stanza</button></td>
+                    <tr *ngFor="let avviso of avvisi">
+                        <td *ngFor="let field of fields">{{ avviso[field] }}</td>
+                        <td class="text-right">
+                            <button [disabled]="isDisabled(avviso.stato)" class="btn btn-primary" type="button" (click)="goRoom(avviso.avviso, avviso.stato)">vai alla stanza</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

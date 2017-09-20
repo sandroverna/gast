@@ -18,6 +18,7 @@ import {WebSocketServiceModel} from './shared/services/websocket.service.model';
 import {QueueingSubject} from './shared/services/queueing.service';
 import {NoopInterceptor} from "./shared/services/interceptor.service";
 import {UserService} from "./shared/services/user.service";
+import {AvvisoService} from "./shared/services/avviso.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: Http) {
         WebSocketServiceModel,
         QueueingSubject,
         UserService,
+        AvvisoService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NoopInterceptor,

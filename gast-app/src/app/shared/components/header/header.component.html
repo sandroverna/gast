@@ -15,30 +15,51 @@
                     </li>
                 </ul>
                 <ul *ngIf="!user.isAuth" class="navbar-nav mt-md-0">
-                    <li *ngFor="let type of userTypes" class="nav-item dropdown" ngbDropdown>
-                        <a (click)="onType(type)" href="javascript:void(0)" class="nav-link text-center">
+                    <li *ngFor="let role of userRoles" class="nav-item dropdown" ngbDropdown>
+                        <a (click)="onType(role)" href="javascript:void(0)" class="nav-link text-center">
                             <i class="fa fa-user fa-2x"></i>
-                            <p>{{ type }}</p>
+                            <p>{{ role }}</p>
                         </a>
                     </li>
                 </ul>
-                <ul *ngIf="user.isAuth && user.room" class="navbar-nav mt-md-0">
+                <ul *ngIf="avviso.id" class="navbar-nav mt-md-0">
                     <li class="dropdown" ngbDropdown>
                         <h2 class="avviso">
-                            avviso #{{user.room}}
+                            avviso #{{avviso.id}}
+                        </h2>
+                    </li>
+                </ul>
+                <ul *ngIf="avviso.state" class="navbar-nav mt-md-0">
+                    <li class="dropdown" ngbDropdown>
+                        <h2 class="avviso text-capitalize">
+                            {{avviso.state | lowercase }}
                         </h2>
                     </li>
                 </ul>
             </div>
             <div class="navbar-nav ml-auto">
+                <!--
                 <ul *ngIf="user.isAuth && user.room" class="navbar-nav mt-md-0">
                     <li class="nav-item dropdown" ngbDropdown>
                         <a href="javascript:void(0)" class="nav-link text-center">
-                            <i class="fa fa-pencil fa-2x"></i>
-                            <p>deposita<br>avviso cartaceo</p>
+                            <i class="fa fa-check-circle fa-2x"></i>
+                            <p>ammissione<br>offerte</p>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link text-center">
+                            <i class="fa fa-envelope-open fa-2x"></i>
+                            <p>apertura<br>buste</p>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link text-center">
+                            <i class="fa fa-gavel fa-2x"></i>
+                            <p>asta<br>incanto</p>
                         </a>
                     </li>
                 </ul>
+                -->
                 <ul class="navbar-nav mt-md-0">
                     <li class="nav-item dropdown" ngbDropdown>
                         <a href="javascript:void(0)" class="nav-link text-center" ngbDropdownToggle>

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
-import { User } from '../../../model/user.model';
+import { AvvisoService } from '../../../shared/services/avviso.service';
+import { User, Avviso } from '../../../model';
 
 @Component({
     selector: 'app-header',
@@ -11,16 +11,20 @@ import { User } from '../../../model/user.model';
 })
 export class HeaderComponent implements OnInit {
     public user: User;
-    public userTypes = ['gestore', 'delegato', 'giudice', 'cancelliere'];
+    public avviso: Avviso;
+    public userRoles = ['gestore', 'delegato', 'giudice', 'cancelliere'];
 
     constructor(
-        private translate: TranslateService,
+        private activate: ActivatedRoute,
         private userService: UserService,
+        private avvisoService: AvvisoService,
         public router: Router
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
-            console.log('header', this.user)
+        });
+        this.avvisoService.avvisoInfo().subscribe(res => {
+            this.avviso = res;
         });
 
         /*
@@ -34,6 +38,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.userService.init();
+        this.avviso = this.avvisoService.reset();
     }
 
     toggleSidebar() {
@@ -49,5 +54,6 @@ export class HeaderComponent implements OnInit {
     onLoggedout() {
         this.router.navigate(['./home']);
         this.userService.logOut();
+        this.avvisoService.avvisoUnselect();
     }
 }

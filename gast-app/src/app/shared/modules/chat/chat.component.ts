@@ -3,10 +3,10 @@ import { Subscription } from 'rxjs/Subscription'
 
 import { WebSocketServiceModel } from '../../../shared/services/websocket.service.model'
 import { UserService } from '../../../shared/services/user.service';
+import { AvvisoService } from '../../../shared/services/avviso.service';
 import { AppSettings } from '../../../appSettings';
 
-import { Message } from '../../../model/websocket';
-import { User } from '../../../model/user.model';
+import { User, Avviso, Message } from '../../../model';
 
 import * as moment from 'moment';
 
@@ -17,6 +17,7 @@ import * as moment from 'moment';
 })
 export class ChatComponent implements OnInit {
     private user: User;
+    private avviso: Avviso;
 
     private heading: string;
     private socketSubscription: Subscription;
@@ -26,18 +27,23 @@ export class ChatComponent implements OnInit {
 
     constructor(
         public socket: WebSocketServiceModel,
-        private userService: UserService
+        private userService: UserService,
+        private avvisoService: AvvisoService
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
             console.log('chat', this.user)
         });
+        this.avvisoService.avvisoInfo().subscribe(res => {
+            this.avviso = res;
+        });
     }
 
     ngOnInit() {
         this.user = this.userService.init();
+        this.avviso = this.avvisoService.init();
         this.resetMessage();
-        this.onConnection(this.user.room);
+        this.onConnection(this.avviso.id);
     }
 
     onConnection(avviso){

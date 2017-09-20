@@ -1,10 +1,12 @@
-<div *ngIf="user.isAuth">
-    <div class="row" style="margin-top: 15px;">
+<div *ngIf="user.isAuth" class="mt-2">
+    <div class="row">
         <div class="col col-xl-2">
             <div class="card card-default">
                 <div class="card-header">
-                    <i class="fa fa-user"></i>
-                    user online
+                    <h5 class="text-uppercase">
+                        <i class="fa fa-user"></i>
+                        user online
+                    </h5>
                 </div>
                 <div class="card-block">
                     content
@@ -14,8 +16,15 @@
         <div class="col col-xl-8">
             <div class="card card-default">
                 <div class="card-header">
-                    <i class="fa fa-bars"></i>
-                    admin
+                    <div class="float-left">
+                        <h5 class="text-uppercase">
+                            <i class="fa fa-bars"></i>
+                            admin
+                        </h5>
+                    </div>
+                    <div class="float-right">
+                        <button class="btn-sm btn-primary" type="button">deposita busta cartacea</button>
+                    </div>
                 </div>
                 <div class="card-block">
                     content
@@ -25,8 +34,10 @@
         <div class="col col-xl-2">
             <div class="card card-default">
                 <div class="card-header">
-                    <i class="fa fa-commenting"></i>
-                    chat
+                    <h5 class="text-uppercase">
+                        <i class="fa fa-commenting"></i>
+                        chat
+                    </h5>
                 </div>
                 <div class="card-block">
                     <app-chat></app-chat>
