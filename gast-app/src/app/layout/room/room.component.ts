@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
-import { User } from '../../model/user.model';
+import { AvvisoService } from '../../shared/services/avviso.service';
+import { User, Avviso } from '../../model';
 import * as moment from 'moment';
 
 @Component({
@@ -11,26 +12,25 @@ import * as moment from 'moment';
 })
 export class RoomComponent implements OnInit {
     private user: User;
-    private sub: any;
-    private room: any;
+    private avviso: Avviso;
 
     constructor(
         private router: Router,
         private activate: ActivatedRoute,
         private userService: UserService,
+        private avvisoService: AvvisoService
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
-            console.log('room', this.user)
+        });
+        this.avvisoService.avvisoInfo().subscribe(res => {
+            this.avviso = res;
         });
     }
 
     ngOnInit() {
         this.user = this.userService.init();
-        this.sub = this.activate.params.subscribe(params => {
-            this.room = +params['room'] || 0;
-            this.userService.inRoom(this.room)
-        });
+        this.avviso = this.avvisoService.init();
     }
 
 }
