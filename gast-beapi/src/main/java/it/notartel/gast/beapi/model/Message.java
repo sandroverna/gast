@@ -6,7 +6,6 @@ public class Message {
 	private String newDate;
 	
 	public Message(String author, String message, String newDate) {
-		super();
 		this.author = author;
 		this.message = message;
 		this.newDate = newDate;
