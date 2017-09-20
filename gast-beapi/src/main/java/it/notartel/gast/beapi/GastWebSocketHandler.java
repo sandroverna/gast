@@ -24,8 +24,6 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
-		
-		System.out.println("MESSAGGIO RICEVUTO = " + message.toString());
 		System.out.println("MESSAGGIO RICEVUTO PAYLOAD = " + message.getPayload().toString());
 		
 		for(WebSocketSession webSocketSession : sessions) {
@@ -38,10 +36,18 @@ public class GastWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//the messages will be broadcasted to all users.
-		HttpHeaders headers = session.getHandshakeHeaders();
-		System.out.println("HEADERS = " + headers.toString());
-		sessions.add(session);
 		System.out.println("Connessione stabilita con: " + session.toString());
+		HttpHeaders headers = session.getHandshakeHeaders();
+		
+		System.out.println("[ID = " + session.getId() + " HEADERS = " + headers.toString() + "]");
+		System.out.println("[ID = " + session.getId() + " URL = " + session.getUri().getPath() + "]");
+		System.out.println("[ID = " + session.getId() + " PARAMS = " + session.getUri().getQuery() + "]");
+		
+		Map<String, String> queryString = Util.getQueryMap(session.getUri().getQuery());
+		System.out.println("ROOM = " + queryString.get("room"));
+		
+		sessions.add(session);
+		
 		messages.forEach(m -> {
 			try {
 				session.sendMessage(m);

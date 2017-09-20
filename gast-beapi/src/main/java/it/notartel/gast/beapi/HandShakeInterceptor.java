@@ -10,19 +10,23 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 public class HandShakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 
-@Override
-public boolean beforeHandshake(ServerHttpRequest request,
-        ServerHttpResponse response, WebSocketHandler wsHandler,
-        Map<String, Object> attributes) throws Exception {
-    System.out.println("Before Handshake");
-    return super.beforeHandshake(request, response, wsHandler, attributes);
-}
+	@Override
+	public boolean beforeHandshake(ServerHttpRequest request,ServerHttpResponse response, WebSocketHandler wsHandler,Map<String, Object> attributes) throws Exception {
+	    /*System.out.println(">>>>>>>>>>>Before Handshake<<<<<<<<<<<<<<");
+	    System.out.println("REQUEST HEADERS = " + request.getHeaders().toString());
+	    System.out.println("REQUEST URI = " + request.getURI().toString());
+	    System.out.println("REQUEST BODY MESSAGE = " + request.getBody().toString());
+	    System.out.println("ATTRIBUTES = " + attributes.toString());
+	    System.out.println("RESPONSE = " + response.toString());*/
+	    return super.beforeHandshake(request, response, wsHandler, attributes);
+	}
 
-@Override
-public void afterHandshake(ServerHttpRequest request,
-        ServerHttpResponse response, WebSocketHandler wsHandler,
-        Exception ex) {
-	System.out.println("After Handshake");
-    super.afterHandshake(request, response, wsHandler, ex);
-}
+	@Override
+	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,Exception ex) {
+		/*System.out.println(">>>>>>>>>>>After Handshake<<<<<<<<<<<<<<");
+	    System.out.println("REQUEST HEADERS = " + request.getHeaders().toString());
+	    System.out.println("REQUEST URI = " + request.getURI().toString());
+	    System.out.println("RESPONSE = " + response.toString());*/
+	    super.afterHandshake(request, response, wsHandler, ex);
+	}
 }
