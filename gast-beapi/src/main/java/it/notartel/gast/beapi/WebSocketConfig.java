@@ -18,6 +18,6 @@ public class WebSocketConfig  implements WebSocketConfigurer {
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(gastWSocketHandler, "/gastwebsocket").addInterceptors(new HttpSessionHandshakeInterceptor()).setAllowedOrigins("*");
+		registry.addHandler(gastWSocketHandler, "/gastwebsocket").addInterceptors(new HandShakeInterceptor()).setAllowedOrigins("*");
 	}
 }
