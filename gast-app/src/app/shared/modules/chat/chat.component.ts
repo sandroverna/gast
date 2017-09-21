@@ -5,11 +5,8 @@ import { WebSocketServiceModel } from '../../../shared/services/websocket.servic
 import { UserService } from '../../../shared/services/user.service';
 import { AvvisoService } from '../../../shared/services/avviso.service';
 import { AppSettings } from '../../../appSettings';
-
 import { User, Avviso, Message } from '../../../model';
-
 import * as moment from 'moment';
-import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-chat',

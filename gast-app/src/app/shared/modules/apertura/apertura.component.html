@@ -1,0 +1,55 @@
+<div class="card card-default">
+    <div class="card-header">
+        <div class="float-left">
+            <h5 class="text-uppercase">
+                <i class="fa fa-bars"></i>
+                Elenco offerte
+            </h5>
+        </div>
+    </div>
+    <div class="card-header">
+        <div class="row">
+            <h5 class="col col-xl-4">
+                <i class="fa fa-gavel"></i>
+                base d'asta: 809.987,98 €
+            </h5>
+            <h5 class="col col-xl-4">
+                <i class="fa fa-check-square"></i>
+                cauzione: 10%
+            </h5>
+            <div class="col col-xl-4 text-right">
+                <button (click)="openDialog()" class="btn btn-primary" type="button">deposita busta cartacea</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-block">
+        <table class="card-block table table-hover">
+            <thead>
+            <tr>
+                <th *ngFor="let title of titles">{{ title }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let avviso of avvisi; let i = index;">
+                <td *ngFor="let field of fields" [ngSwitch]="field">
+                    <span *ngSwitchCase="'offerta'"><input type="text" [(ngModel)]="avviso.offerta" placeholder="inserisci offerta" class="form-control input-lg"></span>
+                    <span *ngSwitchCase="'stato'">
+                        <span *ngIf="!isValida(avviso)">{{ avviso[field] }}</span>
+                        <span *ngIf="isValida(avviso)" class="radio">
+                            <input type="radio" name="winner" [(ngModel)]="avviso.isWinner" [value]="true" (change)="assegna(i)">
+                            <p>{{ avviso.stato }}</p>
+                        </span>
+                    </span>
+                    <span *ngSwitchDefault>{{ avviso[field] }}</span>
+                </td>
+                <td class="text-right">
+                    <button *ngIf="!avviso.isOpen" (click)="open(i)" [disabled]="isOfferta(avviso)" class="btn btn-warning" type="button">apri busta</button>
+                    <button *ngIf="avviso.isOpen" (click)="confermata(i)" [disabled]="isConfermata(avviso)" class="btn btn-success" type="button">confermata</button>
+                    <button *ngIf="avviso.isOpen" (click)="nonValida(i)" [disabled]="isNonValida(avviso)" class="btn btn-danger" type="button">non valida</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

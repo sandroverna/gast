@@ -38,6 +38,7 @@
         </div>
         <div class="col col-xl-8 mb-2">
             <app-ammissione *ngIf="avviso.state === 'AMMISSIONE_OFFERTE'"></app-ammissione>
+            <app-apertura *ngIf="avviso.state === 'APERTURA_BUSTE'"></app-apertura>
         </div>
         <div class="col col-xl-2 mb-2">
             <div class="card card-default">
