@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { AvvisoService } from '../../shared/services/avviso.service';
 import { User, Avviso } from '../../model';
-import * as moment from 'moment';
+import { ModalDialogService, SimpleModalComponent } from "ngx-modal-dialog";
+import { DepositoComponent } from "../../shared/modules/deposito/deposito.component";
+
 
 @Component({
     selector: 'app-room',
@@ -18,7 +20,9 @@ export class RoomComponent implements OnInit {
         private router: Router,
         private activate: ActivatedRoute,
         private userService: UserService,
-        private avvisoService: AvvisoService
+        private avvisoService: AvvisoService,
+        private modalService: ModalDialogService,
+        private viewRef: ViewContainerRef
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
@@ -33,4 +37,11 @@ export class RoomComponent implements OnInit {
         this.avviso = this.avvisoService.init();
     }
 
+    openDialog() {
+        this.modalService.openDialog(this.viewRef, {
+            title: 'Deposita busta cartacea',
+            childComponent: DepositoComponent,
+            data: {pippo: 'pluto'}
+        });
+    }
 }

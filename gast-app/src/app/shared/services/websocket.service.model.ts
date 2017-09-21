@@ -8,6 +8,7 @@ import {isUndefined} from "util";
 export class WebSocketServiceModel {
     private inputStream: QueueingSubject<string>;
     public messages: Observable<string>;
+    private reset: Observable<string>;
 
     public connect(url: string) {
         if (this.messages)
@@ -30,7 +31,7 @@ export class WebSocketServiceModel {
         this.inputStream.next(message);
     }
 
-    public unconnect(reset){
-        this.messages = reset;
+    public unconnect(){
+        this.messages = this.reset;
     }
 }

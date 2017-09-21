@@ -30,6 +30,7 @@
     "ng-http-interceptor": "^3.1.2",
     "ng2-charts": "^1.6.0",
     "ngx-cookie-service": "^1.0.8",
+    "ngx-modal-dialog": "^1.0.0",
     "queueing-subject": "^0.1.1",
     "rxjs": "^5.1.0",
     "rxjs-websockets": "^2.0.0",

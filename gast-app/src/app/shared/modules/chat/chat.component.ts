@@ -25,7 +25,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     private messages: Message[] = [];
     private message: Message;
     private connection: boolean = false;
-    public reset: Observable<string>;
 
     constructor(
         public socket: WebSocketServiceModel,
@@ -49,7 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.socket.unconnect(this.reset);
+        this.socket.unconnect();
         this.socketSubscription.unsubscribe();
         this.connection = false;
         this.messages = [];
