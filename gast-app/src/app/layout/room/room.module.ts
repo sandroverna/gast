@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoomRoutingModule } from './room-routing.module';
 import { RoomComponent } from './room.component';
-import { PageHeaderModule, ChatModule } from './../../shared';
+import { PageHeaderModule, ChatModule, AmmissioneModule } from './../../shared';
 
 @NgModule({
     imports: [
@@ -10,6 +10,7 @@ import { PageHeaderModule, ChatModule } from './../../shared';
         RoomRoutingModule,
         PageHeaderModule,
         ChatModule,
+        AmmissioneModule
     ],
     declarations: [RoomComponent]
 })

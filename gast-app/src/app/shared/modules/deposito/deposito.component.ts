@@ -38,9 +38,8 @@ export class DepositoComponent implements IModalDialog {
 
     constructor() {
         this.actionButtons = [
-            { text: 'Close' }, // no special processing here
-            { text: 'I will always close', onAction: () => true },
-            { text: 'I never close', onAction: () => false }
+            { text: 'chiudi senza salvare' }, // no special processing here
+            { text: 'registra', onAction: () => true }
         ];
     }
 

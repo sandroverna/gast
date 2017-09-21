@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { AvvisoService } from '../../shared/services/avviso.service';
 import { User, Avviso } from '../../model';
-import { ModalDialogService, SimpleModalComponent } from "ngx-modal-dialog";
-import { DepositoComponent } from "../../shared/modules/deposito/deposito.component";
 
 
 @Component({
@@ -21,8 +19,6 @@ export class RoomComponent implements OnInit {
         private activate: ActivatedRoute,
         private userService: UserService,
         private avvisoService: AvvisoService,
-        private modalService: ModalDialogService,
-        private viewRef: ViewContainerRef
     ) {
         this.userService.userInfo().subscribe(res => {
             this.user = res;
@@ -35,13 +31,5 @@ export class RoomComponent implements OnInit {
     ngOnInit() {
         this.user = this.userService.init();
         this.avviso = this.avvisoService.init();
-    }
-
-    openDialog() {
-        this.modalService.openDialog(this.viewRef, {
-            title: 'Deposita busta cartacea',
-            childComponent: DepositoComponent,
-            data: {pippo: 'pluto'}
-        });
     }
 }
