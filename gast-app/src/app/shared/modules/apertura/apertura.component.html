@@ -18,7 +18,7 @@
                 cauzione: 10%
             </h5>
             <div class="col col-xl-4 text-right">
-                <button [disabled]="!isAssegnato()" class="btn btn-primary" type="button">assegna asta</button>
+                <button [disabled]="!isAggiudicato()" class="btn btn-primary" type="button">aggiudica asta</button>
                 <button class="btn btn-primary" type="button">procedi con asta incanto</button>
             </div>
         </div>
@@ -38,7 +38,7 @@
                     <span *ngSwitchCase="'stato'">
                         <span *ngIf="!isValida(avviso)">{{ avviso[field] }}</span>
                         <span *ngIf="isValida(avviso)">
-                            <input type="checkbox" [(ngModel)]="avviso.isWinner" [value]="true" (change)="assegna(i)">
+                            <input type="checkbox" [(ngModel)]="avviso.isWinner" [value]="true" (change)="aggiudica(i)">
                             <p>{{ avviso.stato }}</p>
                         </span>
                     </span>
