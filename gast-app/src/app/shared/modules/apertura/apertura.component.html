@@ -18,7 +18,8 @@
                 cauzione: 10%
             </h5>
             <div class="col col-xl-4 text-right">
-                <button (click)="openDialog()" class="btn btn-primary" type="button">deposita busta cartacea</button>
+                <button [disabled]="!isAssegnato()" class="btn btn-primary" type="button">assegna asta</button>
+                <button class="btn btn-primary" type="button">procedi con asta incanto</button>
             </div>
         </div>
     </div>
@@ -36,8 +37,8 @@
                     <span *ngSwitchCase="'offerta'"><input type="text" [(ngModel)]="avviso.offerta" placeholder="inserisci offerta" class="form-control input-lg"></span>
                     <span *ngSwitchCase="'stato'">
                         <span *ngIf="!isValida(avviso)">{{ avviso[field] }}</span>
-                        <span *ngIf="isValida(avviso)" class="radio">
-                            <input type="radio" name="winner" [(ngModel)]="avviso.isWinner" [value]="true" (change)="assegna(i)">
+                        <span *ngIf="isValida(avviso)">
+                            <input type="checkbox" [(ngModel)]="avviso.isWinner" [value]="true" (change)="assegna(i)">
                             <p>{{ avviso.stato }}</p>
                         </span>
                     </span>

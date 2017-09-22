@@ -79,9 +79,17 @@ export class AperturaComponent implements OnInit {
     }
 
     assegna(index){
-        // fare .map su isWinner & stato per metterli a false e poi assegnare solo l'ultima
-        this.avvisi[index].stato = 'ASSEGNATO';
-        console.log('avviso', this.avvisi[index]);
+        this.avvisi.map((avviso, i) => {
+            if(i !== index){
+                avviso.isWinner = false;
+                if(avviso.stato === 'ASSEGNATO'){
+                    avviso.stato = 'CONFERMATA';
+                }
+            }
+        });
+        if(this.avvisi[index].isWinner){
+            this.avvisi[index].stato = 'ASSEGNATO';
+        }
     }
 
     isOfferta(avviso) {
@@ -98,5 +106,15 @@ export class AperturaComponent implements OnInit {
 
     isNonValida(avviso) {
         return avviso.stato === 'NON_VALIDA' || avviso.offerta === null;
+    }
+
+    isAssegnato() {
+        let result = false;
+        this.avvisi.map((avviso) => {
+            if(avviso.isWinner){
+                result = true;
+            }
+        });
+        return result;
     }
 }
