@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, PipeTransform} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../shared/services/user.service';
 import { AvvisoService } from '../../../shared/services/avviso.service';
@@ -13,6 +13,20 @@ export class HeaderComponent implements OnInit {
     public user: User;
     public avviso: Avviso;
     public userRoles = ['gestore', 'delegato', 'giudice', 'cancelliere'];
+    private avvisi = [
+        {
+            id: '200',
+            state: 'AMMISSIONE_OFFERTE'
+        },
+        {
+            id: '300',
+            state: 'APERTURA_BUSTE'
+        },
+        {
+            id: '400',
+            state: 'ASTA_INCANTO'
+        }
+    ];
 
     constructor(
         private activate: ActivatedRoute,
@@ -49,6 +63,14 @@ export class HeaderComponent implements OnInit {
     onType(type){
         this.user.type = type;
         this.userService.logIn(this.user);
+    }
+
+    onPresentatore(avviso){
+        this.user.type = 'presentatore';
+        this.userService.logIn(this.user);
+        this.avviso = avviso;
+        this.avvisoService.avvisoSelect(this.avviso);
+        this.router.navigate(['./room']);
     }
 
     onLoggedout() {

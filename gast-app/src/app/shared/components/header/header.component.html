@@ -21,6 +21,18 @@
                             <p>{{ role }}</p>
                         </a>
                     </li>
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a href="javascript:void(0)" class="nav-link text-center" ngbDropdownToggle>
+                            <i class="fa  fa-user fa-2x"></i>
+                            <p>presentatore</p>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a *ngFor="let avviso of avvisi" class="dropdown-item" (click)="onPresentatore(avviso)" href="javascript:void(0)">
+                                <i class="fa fa-bars"></i>
+                                <span>{{ avviso.state }}</span>
+                            </a>
+                        </div>
+                    </li>
                 </ul>
                 <ul *ngIf="avviso.id" class="navbar-nav mt-md-0">
                     <li class="dropdown" ngbDropdown>
@@ -38,28 +50,6 @@
                 </ul>
             </div>
             <div class="navbar-nav ml-auto">
-                <!--
-                <ul *ngIf="user.isAuth && user.room" class="navbar-nav mt-md-0">
-                    <li class="nav-item dropdown" ngbDropdown>
-                        <a href="javascript:void(0)" class="nav-link text-center">
-                            <i class="fa fa-check-circle fa-2x"></i>
-                            <p>ammissione<br>offerte</p>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" ngbDropdown>
-                        <a href="javascript:void(0)" class="nav-link text-center">
-                            <i class="fa fa-envelope-open fa-2x"></i>
-                            <p>apertura<br>buste</p>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" ngbDropdown>
-                        <a href="javascript:void(0)" class="nav-link text-center">
-                            <i class="fa fa-gavel fa-2x"></i>
-                            <p>asta<br>incanto</p>
-                        </a>
-                    </li>
-                </ul>
-                -->
                 <ul class="navbar-nav mt-md-0">
                     <li class="nav-item dropdown" ngbDropdown>
                         <a href="javascript:void(0)" class="nav-link text-center" ngbDropdownToggle>
